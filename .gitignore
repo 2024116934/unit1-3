@@ -1,0 +1,11 @@
+# Compiled programs and object files
+*.out
+*.o
+
+# Crash and sanitizer output
+core
+core.*
+
+# Operating-system files
+.DS_Store
+Thumbs.db
