@@ -1,25 +1,38 @@
 #include "activity2_ohmskit.h"
 
-// --- Ohm's law ---
-double v_from_ir(double I, double R) {
-    double V = I * R;
-    return V;
+double v_from_ir(double I, double R)
+{
+    return I * R;
 }
 
-// Missing function: I = V / R
-
-double r_from_vi(double V, double I) {
-    double R;
-
-    // Avoid division by zero.
-    if (I == 0.0) {
-        R = INFINITY;
-    } else {
-        R = V / I;
+double r_from_vi(double V, double I)
+{
+    if(I == 0.0)
+    {
+        return 0.0; // avoid division by zero
     }
-
-    return R;
+    return V / I;
 }
+
+double i_from_vr(double V, double R)
+{
+    if(R == 0.0)
+    {
+        return 0.0;
+    }
+    return V / R;
+}
+
+double r_series2(double R1, double R2)
+{
+    return R1 + R2;
+}
+
+double r_parallel2(double R1, double R2)
+{
+    return (R1 * R2) / (R1 + R2);
+}
+
 
 // --- Combinations ---
 // Add the missing series and parallel functions here.

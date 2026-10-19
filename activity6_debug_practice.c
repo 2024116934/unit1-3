@@ -1,40 +1,37 @@
 #include <stdio.h> 
 #include <string.h> // For strcpy and strcmp
 #include <stdint.h> // Fixed-width integer types
-
 // Define a struct for a Pokémon
 // typedef means we can use 'Pokemon' instead of 'struct Pokemon'
 typedef struct {
-    char name[10]; // Pokémon name (10 chars max - is that enough?)
+    char name[10]; // Pokémon name (10 chars max)
     uint8_t level;  // Pokémon level: unsigned 8-bit integer
     uint16_t hp;   // Pokémon hit points: unsigned 16-bit integer
-    char type[3]; // Pokémon type
+    char type[10]; // Pokémon type - increased size to hold longer strings + null terminator
 } Pokemon;
 
 // (a very bad) Function to check type effectiveness
 float get_effectiveness(char attacker_type[], char defender_type[]);
 
-
 int main(void) {
     // Create two Pokémon
     Pokemon charmander;
     Pokemon bulbasaur;
-
     // Assign values
     strcpy(charmander.name, "Charmander");
     charmander.level = 5;
     charmander.hp = 39;
-    strcpy(charmander.type, "fire"); // Does this match the type in get_effectiveness? This is why its a good idea to use a function or enum for things that should be fixed values
-
-    bulbasaur.name = "Bulbasaur"; // Sadly you can't do this in C :(
+    strcpy(charmander.type, "Fire"); // Match uppercase for comparison in get_effectiveness
+    
+    // Fix: cannot use bulbasaur.name = "Bulbasaur", use strcpy
+    strcpy(bulbasaur.name, "Bulbasaur");
     bulbasaur.level = 5;
     bulbasaur.hp = 45;
     strcpy(bulbasaur.type, "Grass");
 
-    // Create more Pokémon using initializer lists
-
+    // Create more Pokémon using initializer lists, ORDER: name, level, hp, type
     Pokemon Jigglypuff = {"Jigglypuff", 3, 115, "Normal"};
-    Pokemon Pikachu = {7, 35, "Pikachu", "Electric"};
+    Pokemon Pikachu = {"Pikachu", 7, 35, "Electric"}; // fixed wrong order in initializer
 
     // Display effectiveness
     float effectiveness = get_effectiveness(charmander.type, bulbasaur.type);
@@ -44,7 +41,6 @@ int main(void) {
     effectiveness = get_effectiveness(Jigglypuff.type, Pikachu.type);
     printf("%s attacks %s\n", Jigglypuff.name, Pikachu.name);
     printf("Effectiveness: %.1fx\n", effectiveness);
-
     return 0;
 }
 
